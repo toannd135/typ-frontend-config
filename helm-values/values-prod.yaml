@@ -1,0 +1,58 @@
+replicaCount: 1
+
+image: 
+  repository: toannd135/frontend-app
+  tag: v7
+  pullPolicy: IfNotPresent
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+healthCheck:
+  enable: true
+  livenessProbe:
+    httpGet:
+      path: /
+      port: 80
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    timeoutSeconds: 10
+    failureThreshold: 3
+  readinessProbe:
+    httpGet:
+      path: /
+      port: 80
+    initialDelaySeconds: 5
+    periodSeconds: 5
+    timeoutSeconds: 10
+    failureThreshold: 3
+
+nodeSelector: {}
+tolerations: []
+affinity: {}
+
+service: 
+  port: 80
+  targetPort: 80
+  nodePort: 30001
+  type: NodePort
+
+
+ingress:
+  enabled: true
+  className: nginx
+  host: bookmanager.edu.vn
+  path: / 
+  pathType: Prefix
+
+resources: {}
+volumes: []
+volumeMounts: []
+nodeSelector: {}
+tolerations: []
+affinity: {}
+volumes: []
